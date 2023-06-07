@@ -29,10 +29,15 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --no-transfer-progress --file pom.xml       
 
-    - name: Copy Jar file
-      run: mv target/$(ls target/*.{jar,war}) ${{ inputs.artifact-path }}    
-    
-    - uses: actions/upload-artifact@v3
+    - name: Copy Jar or War files
+      run: |
+        for file in $(find target -type f \( -name "*.jar" -o -name "*.war" \))
+        do
+           mv $file ${{ inputs.artifact-path }}
+        done
+
+    - name: Upload the artifact 
+      uses: actions/upload-artifact@v3
       with:
         name: ${{ inputs.artifact-name }}
         path: ${{ inputs.artifact-path }}
