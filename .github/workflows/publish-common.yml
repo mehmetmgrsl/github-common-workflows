@@ -4,13 +4,13 @@ on:
   workflow_call:
     inputs:
       version:
-        required: false
+        required: true
         type: string
       artifact-name:
         required: false
         type: string
       artifact-path:
-        required: true
+        required: false
         type: string
     secrets:
       docker_pat:
