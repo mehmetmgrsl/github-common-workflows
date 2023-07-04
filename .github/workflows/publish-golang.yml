@@ -1,0 +1,33 @@
+name: Reusable Build and Publish Docker Image Workflow
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+    secrets:
+      docker_pat:
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Login to GitHub Container Registry
+      id: login_github_registry
+
+      uses: docker/login-action@v2
+      with:
+         registry: ghcr.io
+         username: ${{ github.actor }}
+         password: ${{ secrets.docker_pat }}
+
+    - name: Build and push Docker image
+      run: |
+        echo "${{ inputs.version }}"
+        docker build -t ghcr.io/${{ github.repository }}:${{ inputs.version }} . 
+        docker push ghcr.io/${{ github.repository }}:${{ inputs.version }}
