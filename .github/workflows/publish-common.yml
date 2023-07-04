@@ -12,9 +12,6 @@ on:
       artifact-path:
         required: false
         type: string
-    secrets:
-      docker_pat:
-        required: true
         
 permissions:
   contents: read
@@ -41,7 +38,7 @@ jobs:
       with:
          registry: ghcr.io
          username: ${{ github.actor }}
-         password: ${{ secrets.docker_pat }}
+         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build and push Docker image
       run: |
