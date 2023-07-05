@@ -13,10 +13,6 @@ on:
         required: false
         type: string
         
-permissions:
-  contents: read
-  packages: write        
-
 jobs:
   publish:
     runs-on: ubuntu-latest
