@@ -14,7 +14,7 @@ on:
 
 jobs:
   semver:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       new-version: ${{ steps.increment_version.outputs.version }}
     
